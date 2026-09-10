@@ -1,0 +1,21 @@
+{
+  "original_core_revision": "4fdec46b205459b92e7d3b9e56df5d8e912d5c85",
+  "original_topp_revision": "582535805581f2bdf4f3871d6802a0b45a3abe36",
+  "transfers": [
+    {
+      "original": "packages/topp/src/CometAdapter.cpp",
+      "destination": "src/CometAdapter.cpp",
+      "sha256": "9483c274c22b4f4bf4b6d986feb585be65cdcec6a1ec648c5e18aec98630ec4b"
+    },
+    {
+      "original": "packages/core/src/openms/include/OpenMS/METADATA/CometNativeIDRemapper.h",
+      "destination": "include/OpenMS/METADATA/CometNativeIDRemapper.h",
+      "sha256": "eb3a9ca70bae71a8ee5bb7ef1f013dad7f1487f1a6d6830b335a37d56f45fb02"
+    },
+    {
+      "original": "packages/core/src/tests/class_tests/openms/source/CometNativeIDRemapper_test.cpp",
+      "destination": "tests/source/CometNativeIDRemapper_test.cpp",
+      "sha256": "ca0760c118e9db90caf64a51b01ed108781f8c2e29440b49f0db464228ddb54f"
+    }
+  ]
+}
