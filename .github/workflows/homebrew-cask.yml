@@ -37,5 +37,6 @@ jobs:
           brew tap okohlbacher/openms4-core https://github.com/okohlbacher/OpenMS4-core
           brew tap okohlbacher/openms4-comet https://github.com/okohlbacher/OpenMS4-comet
           brew install --cask okohlbacher/openms4-comet/openms4-comet
-          CometAdapter --help
+          CometAdapter -write_ini "$RUNNER_TEMP/CometAdapter.ini"
+          test -s "$RUNNER_TEMP/CometAdapter.ini"
           brew uninstall --cask openms4-comet
