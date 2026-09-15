@@ -1,9 +1,9 @@
 cask "openms4-comet" do
   arch arm: "arm64", intel: "x64"
 
-  version "1.0.0-ci.2,c3c4d1b99a15"
-  sha256 arm:   "089ad52975b7b9db77df0802d315a1942934b8a4632ad99d9c85ef4e67d0efeb",
-         intel: "5ef0e2e84e368311511f8171c042698167fd1273efea4bdc6b5c262aca12c874"
+  version "1.0.0-ci.3,a8e676d23764"
+  sha256 arm:   "c243ded2ebd1d90394a8a63a04f85bb19909d30666278d82194e8fe4057b11a9",
+         intel: "3d5177920a701d1470c09d182bdc1c997cd51e8b8dd15ae4755f96ced0ffc3db"
 
   url "https://github.com/okohlbacher/OpenMS4-comet/releases/download/" \
       "comet-v#{version.csv.first}/OpenMS4-comet-macos-#{arch}-Homebrew-#{version.csv.second}.tar.gz"
@@ -11,14 +11,22 @@ cask "openms4-comet" do
   desc "Command-line mass-spectrometry tools built against the OpenMS Core SDK"
   homepage "https://github.com/okohlbacher/OpenMS4-comet"
 
-  disable! date:    "2026-09-14",
-           because: "was built against openms4-core 4.0.0-ci.2, and the tap now serves a binary-incompatible newer Core"
-
   depends_on formula: "okohlbacher/openms4-core/openms4-core"
   depends_on macos: :sequoia
 
   payload = "OpenMS4-comet-macos-#{arch}-Homebrew-#{version.csv.second}"
   binary "#{payload}/bin/CometAdapter"
+
+  # libOpenMS has no versioned name, so a payload only runs with the Core it was built against.
+  preflight do
+    config = "#{HOMEBREW_PREFIX}/opt/openms4-core/lib/cmake/OpenMS/OpenMSConfig.cmake"
+    core = File.exist?(config) ? File.read(config)[/set\(OpenMS_SOURCE_REVISION "([0-9a-f]{40})"\)/, 1] : nil
+    next if core == "ac41cc177023e24a8fbc711a6ce9010187c54c44"
+
+    raise Cask::CaskError, "openms4-comet #{version.csv.first} was built against openms4-core ac41cc177023, " \
+                           "but the installed openms4-core is #{core&.slice(0, 12) || "unknown"}. " \
+                           "Install the openms4-comet release built for the installed Core."
+  end
 
   postflight_steps do
     run "/usr/bin/xattr",
