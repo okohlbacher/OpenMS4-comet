@@ -1,9 +1,9 @@
 cask "openms4-comet" do
   arch arm: "arm64", intel: "x64"
 
-  version "1.0.0-ci.3,a8e676d23764"
-  sha256 arm:   "c243ded2ebd1d90394a8a63a04f85bb19909d30666278d82194e8fe4057b11a9",
-         intel: "3d5177920a701d1470c09d182bdc1c997cd51e8b8dd15ae4755f96ced0ffc3db"
+  version "1.0.0-ci.4,642e574f7f21"
+  sha256 arm:   "d437bca0088095a760a48b09c885c03f7ac4d09a18353575ea0b9295b7c22bf9",
+         intel: "137181d592170a89172c23de19ac9df0df613cf564b19e3b1c723b03d3178d47"
 
   url "https://github.com/okohlbacher/OpenMS4-comet/releases/download/" \
       "comet-v#{version.csv.first}/OpenMS4-comet-macos-#{arch}-Homebrew-#{version.csv.second}.tar.gz"
@@ -21,9 +21,9 @@ cask "openms4-comet" do
   preflight do
     config = "#{HOMEBREW_PREFIX}/opt/openms4-core/lib/cmake/OpenMS/OpenMSConfig.cmake"
     core = File.exist?(config) ? File.read(config)[/set\(OpenMS_SOURCE_REVISION "([0-9a-f]{40})"\)/, 1] : nil
-    next if core == "ac41cc177023e24a8fbc711a6ce9010187c54c44"
+    next if core == "84847138c0de67149601aaa860af7ac8e2e64534"
 
-    raise Cask::CaskError, "openms4-comet #{version.csv.first} was built against openms4-core ac41cc177023, " \
+    raise Cask::CaskError, "openms4-comet #{version.csv.first} was built against openms4-core 84847138c0de, " \
                            "but the installed openms4-core is #{core&.slice(0, 12) || "unknown"}. " \
                            "Install the openms4-comet release built for the installed Core."
   end
